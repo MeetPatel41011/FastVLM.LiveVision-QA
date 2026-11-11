@@ -8,12 +8,12 @@ export default function Home() {
   const [index, setIndex] = useState(0)
   const [videoScale, setVideoScale] = useState(0.5)
   const videoBoxRef = useRef<HTMLDivElement>(null)
-  
+
   const prefix = "FastVLM: Live Camera Q&A with "
   const highlight = "Sub-400ms Latency"
   const suffix = " on the Edge"
   const fullText = prefix + highlight + suffix
-  
+
   useEffect(() => {
     // Typing Animation
     const interval = setInterval(() => {
@@ -24,25 +24,25 @@ export default function Home() {
         }
         return prev + 1
       })
-    }, 70) 
+    }, 70)
 
     // Scroll Animation for Video Box
     const handleScroll = () => {
       if (videoBoxRef.current) {
         const rect = videoBoxRef.current.getBoundingClientRect()
         const windowHeight = window.innerHeight
-        
+
         // Progress: 0 when top of box is at the very bottom of the screen
         // 1 when the middle of the box reaches the middle of the screen
         const boxCenter = rect.top + (rect.height / 2);
         let progress = (windowHeight - rect.top) / (windowHeight / 1.2)
         progress = Math.max(0, Math.min(1, progress))
-        
+
         // Map progress (0 -> 1) to scale (0.5 -> 1.0)
         // This makes it start at half size and grow to full size
         const newScale = 0.5 + (0.5 * progress)
         setVideoScale(newScale)
-        
+
         // Notify ParticleBackground if the box is fully expanded
         window.dispatchEvent(new CustomEvent('boxScaleState', { detail: { isMax: newScale >= 1.0 } }))
       }
@@ -80,7 +80,7 @@ export default function Home() {
             <a href="https://github.com/MeetPatel41011/FastVLM" target="_blank" rel="noopener noreferrer">
               <button className={styles.primaryButton}>View Source Code</button>
             </a>
-            <a href="https://www.linkedin.com/in/meetpatel41011/" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.linkedin.com/in/meetpatel5/" target="_blank" rel="noopener noreferrer">
               <button className={styles.secondaryButton}>Connect on LinkedIn</button>
             </a>
           </div>
@@ -89,7 +89,7 @@ export default function Home() {
 
       {/* Animated Core Box (FastVLM System) */}
       <section className={styles.videoSection}>
-        <div 
+        <div
           ref={videoBoxRef}
           className={styles.videoBox}
           style={{ transform: `scale(${videoScale})`, overflow: 'hidden', display: 'flex' }}
@@ -103,13 +103,13 @@ export default function Home() {
         <div className={styles.aboutContent}>
           <h2>Why I Built This</h2>
           <p>
-            I built FastVLM to demonstrate my core engineering philosophy: 
+            I built FastVLM to demonstrate my core engineering philosophy:
             <strong> taking a complex problem, chopping it down into manageable parts, and getting things done no matter what.</strong>
           </p>
           <p>
-            This project required navigating cutting-edge local LLMs (Qwen2-VL), integrating live WebRTC camera feeds, 
-            orchestrating a Python backend with a Next.js frontend, and deploying seamlessly to cloud GPUs on Modal. 
-            When challenges arose—like hardware constraints or cross-origin latency—I broke them down, 
+            This project required navigating cutting-edge local LLMs (Qwen2-VL), integrating live WebRTC camera feeds,
+            orchestrating a Python backend with a Next.js frontend, and deploying seamlessly to cloud GPUs on Modal.
+            When challenges arose—like hardware constraints or cross-origin latency—I broke them down,
             researched the solutions, and engineered a sub-400ms hybrid architecture that works natively in the browser.
           </p>
         </div>
